@@ -23,6 +23,9 @@ public class GerenciadorCliente {
         this.clientes = new Cliente[filaInicial];
         this.fila = 0;
     }
+    
+  
+    
  
         //Método que irá inserir o Cliente
     public void inserirCliente(Cliente novoCliente){  
@@ -81,7 +84,18 @@ public class GerenciadorCliente {
     }
     return null;
     }
-
+    
+//Método que atualiza todos os dados
+   public void atualizarCliente(int id, String nome, String cpf, String telefone, String endereco, String nivel) {
+        Cliente cliente = buscarClientePorId(id);
+        if (cliente != null) {
+            if (nome != null && !nome.isEmpty()) cliente.setNome(nome);
+            if (cpf != null && !cpf.isEmpty()) cliente.setCpf(cpf);
+            if (telefone != null && !telefone.isEmpty()) cliente.setTelefone(telefone);
+            if (endereco != null && !endereco.isEmpty()) cliente.setEndereco(endereco);
+            if (nivel != null && !nivel.isEmpty()) cliente.setNivel(nivel);
+        }
+    }
         //Método para atualizar algum atributo do cliente a partir do Id dele
     public void atualizarIndividualPorId(int id, String atributo, String atribuir){
     int indice = buscarIndiceClientePorId(id);

@@ -1,35 +1,42 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package entidades;
 
-public class Cliente {
+/**
+ *
+ * @author gabri
+ */
+public class Funcionarios {
     private int id;
     private String nome;
     private String cpf;
     private String Telefone;
     private String Endereco;
-    private String nivel;
-    
-    
-public Cliente(){
-    }
+    private String cargo;
 
-    public Cliente(String nome, String cpf, String Telefone, String Endereco, String nivel) {
-         this.nome = nome;
-        this.cpf = cpf;
-        this.Telefone = Telefone;
-        this.Endereco = Endereco;
-        this.nivel = nivel;
-    }
-    
-    public Cliente(int id, String nome, String cpf, String Telefone, String Endereco, String nivel){
+    public Funcionarios(String nome, String cpf, String Telefone, String Endereco, String cargo) {
         this.nome = nome;
         this.cpf = cpf;
         this.Telefone = Telefone;
         this.Endereco = Endereco;
-        this.nivel = nivel;
+        this.cargo = cargo;
+    }
+
+    public Funcionarios(int id, String nome, String cpf, String Telefone, String Endereco, String cargo) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.Telefone = Telefone;
+        this.Endereco = Endereco;
+        this.cargo = cargo;
+    }
+
+    public Funcionarios() {
     }
     
-    
-
+   
     public int getId() {
         return id;
     }
@@ -70,13 +77,17 @@ public Cliente(){
         this.Endereco = Endereco;
     }
 
-    public String getNivel() {
-        return nivel;
+    public String getCargo() {
+        return cargo;
     }
 
-    public void setNivel(String nivel) {
-        this.nivel = nivel;
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
-}
     
+    
+    
+    
+    
+}
 

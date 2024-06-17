@@ -10,26 +10,59 @@ import javax.swing.JOptionPane;
  * @author gabri
  */
 public class CadastrarClientes extends javax.swing.JFrame {
-        private static GerenciadorCliente gerenciadorCliente = new GerenciadorCliente(10);
+        private  GerenciadorCliente gerenciadorCliente;
         private static ModeloTabelaCliente modeloTabela;
+        private int idCliente;
 
     /**
      * Creates new form CadastrarClientes
      */
     public CadastrarClientes() {
+        this.gerenciadorCliente = GerenciadorClientesTeste.getInstance();
         initComponents();
         
         modeloTabela = new ModeloTabelaCliente();
         tbClientes.setModel(modeloTabela);
         atualizarTabela();
+        
+        
+        
+        
+    tbClientes.getSelectionModel().addListSelectionListener(e -> {
+    if (!e.getValueIsAdjusting() && tbClientes.getSelectedRow() != -1) {
+        int selectedRow = tbClientes.getSelectedRow();
+        Cliente cliente = modeloTabela.getClienteAt(selectedRow);
+        preencherCampos(cliente);
+        idCliente = cliente.getId();
+        }
+    });
+
+    
+  
+        
     }
     
      private void atualizarTabela(){
          if(gerenciadorCliente != null){
              modeloTabela.setClientes(gerenciadorCliente.getClientes());
+             modeloTabela.fireTableDataChanged();
          }
     
 }
+     
+     
+     
+     
+    private void preencherCampos(Cliente cliente) {
+        nomeField.setText(cliente.getNome());
+        cpfField.setText(cliente.getCpf());
+        enderecoField.setText(cliente.getEndereco());
+        telefoneField.setText(cliente.getTelefone());
+        nivelField.setText(cliente.getNivel());
+}
+    
+     
+     
 
      private void limparCampos() {
         nomeField.setText("");
@@ -41,13 +74,16 @@ public class CadastrarClientes extends javax.swing.JFrame {
         
     }
      
-     public boolean validaCampos(String nome, String cpf, String telefone, String endereco){
-     if(nome.trim().isEmpty() || cpf.trim().isEmpty() || telefone.trim().isEmpty() || endereco.trim().isEmpty()){
-         JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos para cadastrar", "ERRO", HEIGHT);
+     public boolean validaCampos(String nome, String cpf, String telefone, String endereco, String nivel){
+     if(nome.trim().isEmpty() || cpf.trim().isEmpty() || telefone.trim().isEmpty() || endereco.trim().isEmpty() || nivel.trim().isEmpty()){
+         JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos para o cadastro", "ERRO", HEIGHT);
          return false;
      }
      return true;
      }
+     
+     
+   
     
 
     /**
@@ -74,6 +110,7 @@ public class CadastrarClientes extends javax.swing.JFrame {
         nivelField = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
         voltarCadCliente = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Clientes");
@@ -132,6 +169,13 @@ public class CadastrarClientes extends javax.swing.JFrame {
             }
         });
 
+        btnAtualizar.setText("ATUALIZAR");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -150,16 +194,18 @@ public class CadastrarClientes extends javax.swing.JFrame {
                             .addComponent(nivelLb))
                         .addGap(61, 61, 61)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(nivelField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(105, 105, 105)
-                                .addComponent(btnCadastrar))
                             .addComponent(telefoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(nomeField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                                 .addComponent(cpfField, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(enderecoField, javax.swing.GroupLayout.Alignment.LEADING)))))
-                .addContainerGap(148, Short.MAX_VALUE))
+                                .addComponent(enderecoField, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(nivelField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(80, 80, 80)
+                                .addComponent(btnCadastrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                                .addComponent(btnAtualizar)))))
+                .addGap(55, 55, 55))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +231,8 @@ public class CadastrarClientes extends javax.swing.JFrame {
                     .addComponent(nivelLb)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(nivelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnCadastrar)))
+                        .addComponent(btnCadastrar)
+                        .addComponent(btnAtualizar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(voltarCadCliente)
                 .addGap(32, 32, 32)
@@ -216,7 +263,7 @@ public class CadastrarClientes extends javax.swing.JFrame {
         String nivel = nivelField.getText().trim();
         
         
-      if (validaCampos(nome, cpf, telefone, endereco)) {
+      if (validaCampos(nome, cpf, telefone, endereco, nivel)) {
         Cliente novoCliente = new Cliente();
         novoCliente.setNome(nome);
         novoCliente.setCpf(cpf);
@@ -235,6 +282,20 @@ public class CadastrarClientes extends javax.swing.JFrame {
         this.dispose();
         tp.setVisible(true);
     }//GEN-LAST:event_voltarCadClienteActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+       String nome = nomeField.getText().trim();
+        String cpf = cpfField.getText().trim();
+        String endereco = enderecoField.getText().trim();
+        String telefone = telefoneField.getText().trim();
+        String nivel = nivelField.getText().trim();
+
+        if (validaCampos(nome, cpf, telefone, endereco, nivel)) {
+            gerenciadorCliente.atualizarCliente(idCliente, nome, cpf, telefone, endereco, nivel);
+            atualizarTabela();
+            limparCampos();
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
     
     
     /**
@@ -270,9 +331,14 @@ public class CadastrarClientes extends javax.swing.JFrame {
                 new CadastrarClientes().setVisible(true);
             }
         });
+        
+        
+        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JTextField cpfField;
     private javax.swing.JLabel cpfLb;

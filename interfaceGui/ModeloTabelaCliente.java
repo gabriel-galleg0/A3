@@ -47,6 +47,10 @@ public class ModeloTabelaCliente extends AbstractTableModel {
        }
     }
     
+       public Cliente getClienteAt(int rowIndex) {
+        return clientes[rowIndex];
+    }
+    
      public void setClientes(Cliente[] clientes) {
         this.clientes = clientes;
         fireTableDataChanged();

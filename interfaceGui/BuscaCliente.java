@@ -4,18 +4,51 @@
  */
 package interfaceGui;
 
+import a3.GerenciadorCliente;
+import entidades.Cliente;
+import interfaceGui.ModeloTabelaCliente;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
  * @author gabri
  */
 public class BuscaCliente extends javax.swing.JFrame {
-
+    private static GerenciadorCliente gerenciadorCliente;
+    private static ModeloTabelaCliente modeloTabela;
+    private int idCliente;
     /**
      * Creates new form BuscaCliente
      */
     public BuscaCliente() {
+         this.gerenciadorCliente = GerenciadorClientesTeste.getInstance();
         initComponents();
+        
+        modeloTabela = new ModeloTabelaCliente();
+        tbClientes.setModel(modeloTabela);
+        atualizarTabela();
+        
+        
+        tbClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting() && tbClientes.getSelectedRow() != -1) {
+                    int selectedRow = tbClientes.getSelectedRow();
+                    Cliente cliente = modeloTabela.getClienteAt(selectedRow);
+                    idCliente = cliente.getId();
+                }
+            }
+        });
     }
+    
+      private void atualizarTabela() {
+     modeloTabela.setClientes(gerenciadorCliente.getClientes());
+     modeloTabela.fireTableDataChanged();
+        }
+    
+    
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,19 +61,11 @@ public class BuscaCliente extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         voltaRemove = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbClientes = new javax.swing.JTable();
+        excluirClienteBotao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 572, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 398, Short.MAX_VALUE)
-        );
 
         voltaRemove.setBackground(new java.awt.Color(255, 51, 0));
         voltaRemove.setForeground(new java.awt.Color(255, 255, 255));
@@ -51,25 +76,70 @@ public class BuscaCliente extends javax.swing.JFrame {
             }
         });
 
+        tbClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbClientes);
+
+        excluirClienteBotao.setBackground(new java.awt.Color(204, 0, 0));
+        excluirClienteBotao.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        excluirClienteBotao.setForeground(new java.awt.Color(255, 255, 255));
+        excluirClienteBotao.setText("EXLUIR");
+        excluirClienteBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirClienteBotaoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(excluirClienteBotao)
+                .addGap(66, 66, 66))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(voltaRemove))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addComponent(excluirClienteBotao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addComponent(voltaRemove)
+                .addGap(60, 60, 60))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 67, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(voltaRemove)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(voltaRemove)
-                .addGap(0, 21, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -81,6 +151,18 @@ public class BuscaCliente extends javax.swing.JFrame {
         this.dispose();
         tp.setVisible(true);
     }//GEN-LAST:event_voltaRemoveActionPerformed
+
+    private void excluirClienteBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirClienteBotaoActionPerformed
+        if (idCliente >= 0) {
+            int confirm = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este cliente?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                gerenciadorCliente.excluirClientePorId(idCliente);
+                atualizarTabela();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Nenhum cliente selecionado.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_excluirClienteBotaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,7 +200,10 @@ public class BuscaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton excluirClienteBotao;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbClientes;
     private javax.swing.JButton voltaRemove;
     // End of variables declaration//GEN-END:variables
 }

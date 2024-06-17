@@ -25,8 +25,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         cadastrarBotao = new javax.swing.JButton();
-        atualizaBotao = new javax.swing.JButton();
-        removeBotao = new javax.swing.JButton();
         buscaBotao = new javax.swing.JButton();
         sairBotao = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -40,22 +38,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         cadastrarBotao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cadastrarBotaoActionPerformed(evt);
-            }
-        });
-
-        atualizaBotao.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        atualizaBotao.setText("Atualizar Cadastro");
-        atualizaBotao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                atualizaBotaoActionPerformed(evt);
-            }
-        });
-
-        removeBotao.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        removeBotao.setText("Remover Cliente");
-        removeBotao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeBotaoActionPerformed(evt);
             }
         });
 
@@ -99,14 +81,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(193, 193, 193))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(removeBotao)
-                            .addComponent(cadastrarBotao))
-                        .addGap(80, 80, 80)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(atualizaBotao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buscaBotao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(77, 77, 77))
+                        .addComponent(cadastrarBotao)
+                        .addGap(77, 77, 77)
+                        .addComponent(buscaBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(sairBotao)
                         .addGap(299, 299, 299))))
@@ -121,12 +99,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(73, 73, 73)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cadastrarBotao)
-                    .addComponent(atualizaBotao))
-                .addGap(60, 60, 60)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(removeBotao)
                     .addComponent(buscaBotao))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                 .addComponent(sairBotao)
                 .addGap(104, 104, 104))
         );
@@ -152,18 +126,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         c.setVisible(true);
         
     }//GEN-LAST:event_cadastrarBotaoActionPerformed
-
-    private void atualizaBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizaBotaoActionPerformed
-        AtualizarCliente att = new AtualizarCliente();
-        this.dispose();
-        att.setVisible(true);
-    }//GEN-LAST:event_atualizaBotaoActionPerformed
-
-    private void removeBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBotaoActionPerformed
-        RemoverCliente rc = new RemoverCliente();
-        this.dispose();
-        rc.setVisible(true);
-    }//GEN-LAST:event_removeBotaoActionPerformed
 
     private void buscaBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscaBotaoActionPerformed
         BuscaCliente bc = new BuscaCliente();
@@ -213,13 +175,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton atualizaBotao;
     private javax.swing.JButton buscaBotao;
     private javax.swing.JButton cadastrarBotao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton removeBotao;
     private javax.swing.JButton sairBotao;
     // End of variables declaration//GEN-END:variables
 }
